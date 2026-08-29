@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Superseded runs (new commit pushed to the same branch/PR) are pure waste;
+# cancelling them early keeps the queue free. CI publishes nothing, so
+# cancellation is always safe here.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-run-samples:
+    name: Build and run samples
+    runs-on: ubuntu-latest
+    # Unlike a lot of systems-programming curricula, this one doesn't need
+    # special hardware to verify - just a real, fairly recent Linux kernel,
+    # which the runner already is (see README.md's "How this was verified"
+    # for the exact kernel/liburing versions this repo was built against).
+    # So this job doesn't just compile the samples, it runs them and checks
+    # their output.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kernel and toolchain versions
+        run: |
+          uname -r
+          cat /proc/sys/kernel/io_uring_disabled 2>/dev/null || echo "io_uring_disabled sysctl not present"
+
+      - name: Install liburing and build tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq liburing-dev gcc make
+          pkg-config --modversion liburing
+
+      - name: Build every sample
+        run: |
+          set -e
+          for dir in code/*/; do
+            if [ -f "$dir/Makefile" ]; then
+              echo "== $dir =="
+              make -C "$dir" clean
+              make -C "$dir"
+            fi
+          done
+
+      - name: Run every sample's checked test target
+        run: |
+          set -e
+          for dir in code/*/; do
+            if [ -f "$dir/Makefile" ] && grep -q '^test:' "$dir/Makefile"; then
+              echo "== $dir =="
+              make -C "$dir" test
+            fi
+          done
