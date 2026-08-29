@@ -1,0 +1,40 @@
+name: Bug report
+description: Something in a sample or the curriculum is wrong
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem.
+  - type: input
+    id: location
+    attributes:
+      label: Where
+      description: File or curriculum stage this is about, e.g. `code/05-echo-server/uring_echo.c` or `curriculum/03-networking.md`.
+      placeholder: "code/05-echo-server/uring_echo.c"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What's wrong?
+      description: A compile error, a wrong claim, a dead link, incorrect runtime behavior, etc. Include the exact error text if there is one.
+      placeholder: |
+        1. Ran `make` in code/05-echo-server
+        2. Got this error: ...
+    validations:
+      required: true
+  - type: input
+    id: kernel-version
+    attributes:
+      label: Kernel version
+      description: Output of `uname -r`. io_uring behavior is genuinely version-dependent, so this matters more here than in most repos.
+    validations:
+      required: false
+  - type: input
+    id: liburing-version
+    attributes:
+      label: liburing version
+      description: Output of `pkg-config --modversion liburing`, if relevant.
+    validations:
+      required: false

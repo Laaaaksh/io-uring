@@ -1,0 +1,14 @@
+# Build output from the C samples (see code/*/Makefile)
+code/**/*.o
+code/**/*.out
+code/**/*.copy
+
+# Scratch files samples create/consume at runtime
+code/**/testfile*
+code/**/*.tmp
+
+# Editor / OS cruft
+.DS_Store
+*.swp
+.vscode/
+.idea/
