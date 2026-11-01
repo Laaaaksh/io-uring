@@ -39,7 +39,7 @@ instead):
 
 Use GitHub's private vulnerability reporting:
 
-> https://github.com/attentionfs/io-uring/security/advisories/new
+> https://github.com/Laaaaksh/io-uring/security/advisories/new
 
 That reaches the maintainer privately so any real issue can be fixed before
 it's discussed in public.
