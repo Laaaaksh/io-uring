@@ -6,7 +6,7 @@
 actually helps, and prove it with my own numbers" — with runnable code,
 actually run, at every step.**
 
-[![CI](https://github.com/Laaaaksh/io-uring/actions/workflows/ci.yml/badge.svg)](https://github.com/Laaaaksh/io-uring/actions/workflows/ci.yml)
+[![CI](https://github.com/attentionfs/io-uring/actions/workflows/ci.yml/badge.svg)](https://github.com/attentionfs/io-uring/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](LICENSE)
 [![Verified against Linux 6.12](https://img.shields.io/badge/verified%20against-Linux%206.12-informational?logo=linux&logoColor=white)](code/README.md#how-this-was-verified)
 
